@@ -1,0 +1,118 @@
+@mixin prefix($property, $value, $prefixes: ()) {
+  @each $prefix in $prefixes {
+    #{'-' + $prefix + '-' + $property}: $value;
+  }
+
+  // Output standard non-prefixed declaration
+  #{$property}: $value;
+}
+
+@mixin airykson-reset {
+
+  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+  blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins,
+  kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt,
+  dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead,
+  tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header,
+  hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin         : 0;
+    padding        : 0;
+    border         : 0;
+    font-size      : 100%;
+    font           : inherit;
+    vertical-align : baseline;
+  }
+
+  // HTML5 display-role reset for older browsers
+  article, aside, details, figcaption, figure, footer,
+  header, hgroup, menu, nav, section {
+    display: block;
+  }
+
+
+  // 1. prevents text resizing on orientation changes in IE and iOS
+  // 2. set default box-sizing to border-box
+
+  html {
+    @include prefix((text-size-adjust: 100%),ms webkit); // 1.
+    @include prefix((box-sizing: border-box),webkit moz); // 2.
+  }
+
+  body {
+    line-height: 1;
+  }
+
+  a {
+    text-decoration : inherit;
+    color           : inherit;
+    &:hover {cursor: pointer;}
+  }
+
+  img {
+    max-width             : 100%;
+    height                : auto;
+    -ms-interpolation-mode: bicubic;
+    display               : inline-block;
+    vertical-align        : middle;
+  }
+
+  *,
+  *:before,
+  *:after {
+    @include prefix((box-sizing: inherit),webkit moz);
+  }
+
+  ul, ol {
+    margin-left : 0;
+    list-style  : none;
+  }
+
+  textarea {
+    max-width : 100%;
+    height    : auto;
+  }
+
+  blockquote,q {
+    quotes: none;
+    &:before, &:after {
+      content: "";
+      content: none;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  // --------------------------------------------------
+  // Helper classes
+  // --------------------------------------------------
+
+  // positioning
+  @each $floating-direction in left, right, none {
+    .fl-#{$floating-direction} { float: #{$floating-direction} !important;}
+  }
+
+  // clearfix
+  .clearfix {
+    &:before, &:after {
+      content: " ";
+      display: table;
+    }
+    &:after {
+      clear: both;
+    }
+  }
+
+  // text
+  @each $ta-align in left, right, center, justify {
+    .ta-#{$ta-align} {text-align: #{$ta-align} !important;}
+  }
+
+  // display classes
+  .hide {display: none;}
+  .invisible {visibility: invisible;}
+
+
+}
